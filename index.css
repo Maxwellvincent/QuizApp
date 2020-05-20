@@ -19,12 +19,20 @@ html,body {
     background-color: whitesmoke;
     border-radius: 5px;
     padding: 10px;
+    text-align: center;
 }
 
 form {
     display: grid;
-    grid-template-columns: 300px 300px;
-    grid-template-rows: 60px 60px;
-    gap: 20px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 2fr 2fr;
+    gap: 10px;
+}
+.question-container {
+    margin-bottom: 20px;
+}
+
+#question {
+    text-align: center;
 }
 
