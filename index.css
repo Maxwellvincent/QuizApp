@@ -20,6 +20,7 @@ html,body {
     border-radius: 5px;
     padding: 10px;
     text-align: center;
+    box-shadow: 5px 5px 8px #000000;
 }
 
 form {
@@ -36,3 +37,18 @@ form {
     text-align: center;
 }
 
+/* .hide {
+    display: none;
+} */
+
+#start-button, #next-button {
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 10px 20px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
