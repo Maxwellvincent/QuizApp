@@ -29,6 +29,17 @@ form {
     grid-template-rows: 2fr 2fr;
     gap: 10px;
 }
+
+fieldset {
+    border-radius: 5px;
+    background-color: #a56cc1;
+    color: whitesmoke;
+}
+
+fieldset:hover {
+    background-color: #020024;
+}
+
 .question-container {
     margin-bottom: 20px;
 }
@@ -37,14 +48,19 @@ form {
     text-align: center;
 }
 
-/* .hide {
+.hide {
     display: none;
-} */
+}
 
 #start-button, #next-button {
     font-size: 1.5rem;
     font-weight: bold;
     padding: 10px 20px;
+}
+
+#start-button:hover, #next-button:hover {
+    background-color: #020024;
+    color: whitesmoke;
 }
 
 .controls {
