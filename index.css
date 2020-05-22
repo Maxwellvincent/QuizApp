@@ -9,10 +9,24 @@ html,body {
     height: 100vh;
     width: 100vw;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
-   
+
+.input-cnt {
+    margin-bottom: 10%;
+}
+
+#counter {
+    text-align: center;
+    height: 30px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 8px #000000;
+    font-size: large;
+    font-weight: bold;
+}
+
 .container {
     width: 800px;
     max-width: 80%;
@@ -46,6 +60,8 @@ fieldset:hover {
 
 #question {
     text-align: center;
+    font-weight: bold;
+    font-size: 25px;
 }
 
 .hide {
@@ -67,4 +83,12 @@ fieldset:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+body.correct {
+    background-color: green;
+}
+
+body.wrong {
+    background-color: red;
 }
