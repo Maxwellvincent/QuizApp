@@ -1,6 +1,15 @@
-let questionElement = $("#question");
+const startButton = $("#start-button");
+const nextButton = $("#next-button");
+const questionElement = $("#question");
+// grabs all the input types for the answers. 
+const answerButtons = $('label');
+console.log(answerButtons);
+// undeclared variable random question
 let randomQuestion;
+// logs the position of the index of each question
 let currentQuestionIndex;
+
+
 const questions = [
     {
         question: "A solution with a pH of 4 would be considered?",
@@ -37,13 +46,14 @@ function removeHide(){
     $(".input-cnt").removeClass("hide");
 }
 
+// Function is responsible for starting the quiz app. 
 function startQuiz(){
     // grab the start button, add event listener to it. 
-    const startButton = $("#start-button");
-    const nextButton = $("#next-button");
     startButton.on("click", function(){
         $(".question-container").show();
+        // take the variable randomquestion, which finds a random question from our list of objects.
         randomQuestion = questions.sort(() => Math.random() - .5);
+        // allows the quiz to know that this will be the first question of the index.
         currentQuestionIndex = 0;
         nextQuestion();
         // hides the start button
@@ -53,22 +63,27 @@ function startQuiz(){
     });
 }
 
-// calls a function to show the next question
-// grabs the question object and sets it to the DOM.
-function showNextQuestion(questions){
+// this functions calls the show question function, which outputs the question onto the page.  
+function nextQuestion(){
+    showQuestion(randomQuestion[currentQuestionIndex]);
+   }
+
+// Question is passed into this function by nextquestion.
+function showQuestion(questions){
     questionElement.text(questions.question);
+    questions.choices.forEach(function(choice){
+        console.log(choice);
+        
+    })
 }
 
-// This function allows us to grab a random question, from the question object. 
-// passes this random question to the show question function, which then sets the question. 
-function nextQuestion(){
- showNextQuestion(randomQuestion[currentQuestionIndex]);
-}
 
 
 function setAnswerChoices(){
     
 }
+
+
 
 function handleQuiz(){
     $(".question-container").hide();
