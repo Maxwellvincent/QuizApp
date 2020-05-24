@@ -71,9 +71,15 @@ function nextQuestion(){
 // Question is passed into this function by nextquestion.
 function showQuestion(questions){
     questionElement.text(questions.question);
-    questions.choices.forEach(function(choice){
+    questions.choices.forEach(function(choice,choiceindex){
         console.log(choice);
-        
+        // need to create new dom elements to append questions to. 
+        $('.answer-form').append(`
+            <fieldset id="">
+            <input type="radio" id="a" name="answer" value="${choiceindex}">
+            <label for="${choiceindex}">${choice}</label>
+            </fieldset>
+        `);
     })
 }
 
