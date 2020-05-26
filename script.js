@@ -71,7 +71,7 @@ function nextQuestion(){
     showQuestion(randomQuestion[currentQuestionIndex]);
    }
 
-   
+
 // Question is passed into this function by nextquestion.
 function showQuestion(questions){
     questionElement.text(questions.question);
@@ -101,7 +101,18 @@ $('.answer-form').on('click', 'input', function(e){
     // also increase score by 1
     // then show next button, to generate next question
     if(this.checked === true){
-
+        // grabbed each input, need to remove the checked from the uncheck,
+        // may add a class to them to turn red
+        // and the checked one to green
+        // maybe an If statement.
+        let options = $('.answer-form input').toArray();
+        console.log(options);
+        options.forEach(function(option){
+            if(option.checked === false){
+                option.parentElement.setAttribute("class", "wrong");
+                option.disabled = true;
+            }
+        });
     }
 })
 
@@ -115,6 +126,7 @@ function questionCorrect(){
 function questionWrong(){
     $('body').addClass("wrong");
 }
+
 
 
 function handleQuiz(){

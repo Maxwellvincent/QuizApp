@@ -92,3 +92,7 @@ body.correct {
 body.wrong {
     background-color: red;
 }
+
+fieldset.wrong {
+    background-color: red;
+}
