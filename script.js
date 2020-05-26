@@ -1,6 +1,7 @@
 const startButton = $("#start-button");
 const nextButton = $("#next-button");
 const questionElement = $("#question");
+let score = 0;
 // grabs all the input types for the answers. 
 const answerButtons = $('label');
 console.log(answerButtons);
@@ -59,7 +60,7 @@ function startQuiz(){
         // hides the start button
         startButton.addClass("hide");
         removeHide();
-        nextButton.removeClass("hide");
+        $("input-cnt").append(`<input type="text" id="counter" value="Current question: ${currentQuestionIndex}/5"></input>`)
     });
 }
 
@@ -67,9 +68,9 @@ function startQuiz(){
 function nextQuestion(){
     // this empties the previous form elements, so that the new elements can be added to DOM.
     $('.answer-form').empty();
-
+    // $('.input-cnt').append(`<div>Score = ${score}</div>`);
     showQuestion(randomQuestion[currentQuestionIndex]);
-   }
+}
 
 
 // Question is passed into this function by nextquestion.
@@ -85,38 +86,62 @@ function showQuestion(questions){
             </fieldset>
         `);
     });
+        // this functions adds a click event to each answer-input
+        // may need to add this to each new question, bc it runs once?
+    $('.answer-form').on('click', 'input', function(e){
+        // this.check returns the value of true, for any input that is selected. 
+        let userAnswer = this.value;
+        console.log(this.value);
+        nextButton.removeClass("hide");
+        // If the radio button that is clicked is checked(true), then
+        // we want to see if the value (this.value) is equal to the question.answer
+        // If it is then, run this function questionCorrect
+        // also increase score by 1
+        // then show next button, to generate next question
+        if(this.checked === true){
+            console.log(questions.answer);
+            answerChoices();
+            if(this.value == questions.answer){
+                questionCorrect();
+                console.log("working");
+                // Still need to change the background-color to class of correct
+                // need to increase the score and the currentindex
+                currentQuestionIndex++;
+                score++;
+                console.log(currentQuestionIndex);
+                if(currentQuestionIndex < questions.length + 1){
+                    console.log(questions);   
+                }
+            } else {
+                questionWrong();
+                // determine what happens when the answer is false 
+                console.log("THIS IS WRONG");
+            }
+            
+        }
+    });
 
 }
 
+// Next grab the next button add a click event
+// need to generate the next question
+// make sure all old content is removed and new content added
+// increase the score
 
-// this functions adds a click event to each answer-input
-// may need to add this to each new question, bc it runs once?
-$('.answer-form').on('click', 'input', function(e){
-    // this.check returns the value of true, for any input that is selected. 
-    let userAnswer = this.value;
-    console.log(this.value);
-    // If the radio button that is clicked is checked(true), then
-    // we want to see if the value (this.value) is equal to the question.answer
-    // If it is then, run this function questionCorrect
-    // also increase score by 1
-    // then show next button, to generate next question
-    if(this.checked === true){
-        // grabbed each input, need to remove the checked from the uncheck,
-        // may add a class to them to turn red
-        // and the checked one to green
-        // maybe an If statement.
-        let options = $('.answer-form input').toArray();
-        console.log(options);
-        options.forEach(function(option){
+function answerChoices(){
+    // grabbed each input, need to remove the checked from the uncheck,
+            // may add a class to them to turn red
+            // and the checked one to green
+            // maybe an If statement.
+            let options = $('.answer-form input').toArray();
+            console.log(options);
+            options.forEach(function(option){
             if(option.checked === false){
                 option.parentElement.setAttribute("class", "wrong");
                 option.disabled = true;
             }
-        });
-    }
-})
-
-
+            });
+}
 
 
 function questionCorrect(){
