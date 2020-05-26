@@ -65,9 +65,13 @@ function startQuiz(){
 
 // this functions calls the show question function, which outputs the question onto the page.  
 function nextQuestion(){
+    // this empties the previous form elements, so that the new elements can be added to DOM.
+    $('.answer-form').empty();
+
     showQuestion(randomQuestion[currentQuestionIndex]);
    }
 
+   
 // Question is passed into this function by nextquestion.
 function showQuestion(questions){
     questionElement.text(questions.question);
@@ -75,20 +79,42 @@ function showQuestion(questions){
         console.log(choice);
         // need to create new dom elements to append questions to. 
         $('.answer-form').append(`
-            <fieldset id="">
-            <input type="radio" id="a" name="answer" value="${choiceindex}">
+            <fieldset id="${choiceindex}">
+            <input type="radio" name="answer" value="${choiceindex}">
             <label for="${choiceindex}">${choice}</label>
             </fieldset>
         `);
-    })
+    });
+
 }
 
 
+// this functions adds a click event to each answer-input
+// may need to add this to each new question, bc it runs once?
+$('.answer-form').on('click', 'input', function(e){
+    // this.check returns the value of true, for any input that is selected. 
+    let userAnswer = this.value;
+    console.log(this.value);
+    // If the radio button that is clicked is checked(true), then
+    // we want to see if the value (this.value) is equal to the question.answer
+    // If it is then, run this function questionCorrect
+    // also increase score by 1
+    // then show next button, to generate next question
+    if(this.checked === true){
 
-function setAnswerChoices(){
-    
+    }
+})
+
+
+
+
+function questionCorrect(){
+    $('body').addClass("correct");
 }
 
+function questionWrong(){
+    $('body').addClass("wrong");
+}
 
 
 function handleQuiz(){
