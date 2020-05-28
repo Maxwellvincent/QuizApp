@@ -60,7 +60,7 @@ function startQuiz(){
         // hides the start button
         startButton.addClass("hide");
         removeHide();
-        $("input-cnt").append(`<input type="text" id="counter" value="Current question: ${currentQuestionIndex}/5"></input>`)
+        $("input-cnt").append(`<input type="text" id="counter" value="Current question: ${currentQuestionIndex}/${randomQuestion.length -1}"></input>`)
     });
 }
 
@@ -106,16 +106,15 @@ function showQuestion(questions){
                 console.log("working");
                 // Still need to change the background-color to class of correct
                 // need to increase the score and the currentindex
-                currentQuestionIndex++;
+                // currentQuestionIndex++;
                 score++;
                 console.log(currentQuestionIndex);
-                if(currentQuestionIndex < questions.length + 1){
-                    console.log(questions);   
-                }
+                console.log(questions);
             } else {
                 questionWrong();
                 // determine what happens when the answer is false 
                 console.log("THIS IS WRONG");
+                // currentQuestionIndex++;
             }
             
         }
@@ -124,9 +123,36 @@ function showQuestion(questions){
 }
 
 // Next grab the next button add a click event
-// need to generate the next question
-// make sure all old content is removed and new content added
-// increase the score
+
+nextButton.on("click", (e)=>{
+    currentQuestionIndex++;
+    console.log(randomQuestion);
+    // Need to check if all questions are done, and if so send to end page.
+    if(currentQuestionIndex < randomQuestion.length){
+        // need to generate the next question
+        nextQuestion();
+
+        // Need to hide the button again
+        nextButton.addClass("hide");
+
+        // make sure all old content is removed and new content added
+
+            // need to create a function to update the currentQuestion index dynamically
+            $(".input-cnt").empty();
+            $(".input-cnt").append(`<input type="text" id="counter" value="Current question: ${currentQuestionIndex}/${randomQuestion.length -1}"></input>`);
+            // need to clear the background color
+
+            
+            
+            // show the score
+    } else {
+        console.log("game is done.");
+    }
+        
+})
+
+
+
 
 function answerChoices(){
     // grabbed each input, need to remove the checked from the uncheck,
