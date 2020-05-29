@@ -2,9 +2,6 @@ const startButton = $("#start-button");
 const nextButton = $("#next-button");
 const questionElement = $("#question");
 let score = 0;
-// grabs all the input types for the answers. 
-const answerButtons = $('label');
-console.log(answerButtons);
 // undeclared variable random question
 let randomQuestion;
 // logs the position of the index of each question
@@ -60,7 +57,11 @@ function startQuiz(){
         // hides the start button
         startButton.addClass("hide");
         removeHide();
-        $("input-cnt").append(`<input type="text" id="counter" value="Current question: ${currentQuestionIndex}/${randomQuestion.length -1}"></input>`)
+
+        clearStat();
+
+        updateResults();
+        console.log(score);
     });
 }
 
@@ -70,6 +71,7 @@ function nextQuestion(){
     $('.answer-form').empty();
     // $('.input-cnt').append(`<div>Score = ${score}</div>`);
     showQuestion(randomQuestion[currentQuestionIndex]);
+    nextButton.addClass("hide");
 }
 
 
@@ -77,7 +79,6 @@ function nextQuestion(){
 function showQuestion(questions){
     questionElement.text(questions.question);
     questions.choices.forEach(function(choice,choiceindex){
-        console.log(choice);
         // need to create new dom elements to append questions to. 
         $('.answer-form').append(`
             <fieldset id="${choiceindex}">
@@ -88,36 +89,26 @@ function showQuestion(questions){
     });
         // this functions adds a click event to each answer-input
         // may need to add this to each new question, bc it runs once?
-    $('.answer-form').on('click', 'input', function(e){
-        // this.check returns the value of true, for any input that is selected. 
-        let userAnswer = this.value;
-        console.log(this.value);
+    $('fieldset').on('click', 'input', function(e){
         nextButton.removeClass("hide");
         // If the radio button that is clicked is checked(true), then
         // we want to see if the value (this.value) is equal to the question.answer
         // If it is then, run this function questionCorrect
         // also increase score by 1
         // then show next button, to generate next question
+        console.log(this)
         if(this.checked === true){
-            console.log(questions.answer);
             answerChoices();
-            if(this.value == questions.answer){
-                questionCorrect();
-                console.log("working");
-                // Still need to change the background-color to class of correct
-                // need to increase the score and the currentindex
-                // currentQuestionIndex++;
-                score++;
-                console.log(currentQuestionIndex);
-                console.log(questions);
-            } else {
-                questionWrong();
-                // determine what happens when the answer is false 
-                console.log("THIS IS WRONG");
-                // currentQuestionIndex++;
-            }
-            
         }
+        if(this.value == questions.answer){
+            questionCorrect();
+            // need to increase the score and the currentindex
+            score++
+        } else {
+            console.log(score);
+            questionWrong();
+        }
+        console.log(score);
     });
 
 }
@@ -126,33 +117,95 @@ function showQuestion(questions){
 
 nextButton.on("click", (e)=>{
     currentQuestionIndex++;
-    console.log(randomQuestion);
+
+    // need to check if the answer was correct, and then add to score. 
+
+
+    // need to clear, and reset the background color
+    clearStat();
     // Need to check if all questions are done, and if so send to end page.
     if(currentQuestionIndex < randomQuestion.length){
+        console.log(score);
         // need to generate the next question
         nextQuestion();
 
-        // Need to hide the button again
-        nextButton.addClass("hide");
+        // need to create a function to update the currentQuestion index dynamically
+        updateResults()
 
-        // make sure all old content is removed and new content added
 
-            // need to create a function to update the currentQuestion index dynamically
-            $(".input-cnt").empty();
-            $(".input-cnt").append(`<input type="text" id="counter" value="Current question: ${currentQuestionIndex}/${randomQuestion.length -1}"></input>`);
-            // need to clear the background color
-
-            
-            
-            // show the score
     } else {
+        console.log(score);
         console.log("game is done.");
+        // NEED TO IMPLEMENT FUNCTIONALITY HERE, TO PRESENT LAST SCREEN / OR DYNAMICALLY UPDATE PAGE
+        $('.container').empty()
+        $('.container').append(`
+            <h1 id="results">You scored ${score}/${randomQuestion.length}</h1>
+            <h2>${(score/randomQuestion.length) * 100} %</h2>
+            <div class="controls">
+                <button id="restart-button">Restart Quiz</button>
+            </div>
+        `)
+        $('#restart-button').on('click', function(){
+            console.log("restart!!");
+            $('.container').empty()
+            $('.container').append(`
+            <div class="question-container">
+            <div id="question" class="hide">Question</div><br>
+            <form class="answer-form">
+                
+                <!-- <fieldset id="" class="hide">
+                    <input type="radio" id="a" name="answer" value="a">
+                    <label for="a">Answer A</label>
+                </fieldset>
+                
+                <fieldset id="" class="hide">
+                    <input type="radio" id="b" name="answer" value="b">
+                    <label for="b">Answer B</label>
+                </fieldset>
+                
+                <fieldset id="" class="hide">
+                    <input type="radio" id="c" name="answer" value="c">
+                    <label for="c">Answer C</label>
+                </fieldset>
+                
+                <fieldset id="" class="hide">
+                    <input type="radio" id="d" name="answer" value="d">
+                    <label for="d">Answer D</label>
+                </fieldset> -->
+                
+            </form>
+            </div>
+            <div class="controls">
+                <button id="start-button">Start Quiz</button>
+                <button id="next-button" class="hide">Next</button>
+            </div>
+            `);
+
+            // clear out this page
+            // set everything to zero
+            score = 0;
+            currentQuestionIndex = 0;
+            // start at the first question again. 
+        })
+        // CLEAR THE SCREEN, 
+        //  SHOW THE FINAL SCORE AS A PERCENT
+        // HAVE A RESTART BUTTON
+        //  ALL OF THIS SHOULD BE A FUNCTION CALLED RESTARTQUIZ
     }
+
         
 })
 
+function updateResults(){
+    $(".input-cnt").append(`<input type="text" id="counter" value="Current question: ${currentQuestionIndex}/${randomQuestion.length}"></input>`);
 
+    $(".input-cnt").append(`<input type="text" id="score" value="Score: ${score}"</input>`);
+}
 
+function clearStat() {
+    $('body').removeClass("wrong correct");
+    $(".input-cnt").empty();
+}
 
 function answerChoices(){
     // grabbed each input, need to remove the checked from the uncheck,
@@ -160,11 +213,13 @@ function answerChoices(){
             // and the checked one to green
             // maybe an If statement.
             let options = $('.answer-form input').toArray();
-            console.log(options);
             options.forEach(function(option){
             if(option.checked === false){
                 option.parentElement.setAttribute("class", "wrong");
                 option.disabled = true;
+            }
+            if(option.checked === true){
+                option.parentElement.setAttribute("class", "correct");
             }
             });
 }

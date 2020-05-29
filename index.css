@@ -15,7 +15,12 @@ html,body {
 }
 
 .input-cnt {
-    margin-bottom: 10%;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 #counter {
@@ -25,6 +30,17 @@ html,body {
     box-shadow: 5px 5px 8px #000000;
     font-size: large;
     font-weight: bold;
+    
+}
+
+#score {
+    text-align: center;
+    height: 30px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 8px #000000;
+    font-size: large;
+    font-weight: bold;
+
 }
 
 .container {
@@ -68,13 +84,13 @@ fieldset:hover {
     display: none;
 }
 
-#start-button, #next-button {
+#start-button, #next-button, #restart-button {
     font-size: 1.5rem;
     font-weight: bold;
     padding: 10px 20px;
 }
 
-#start-button:hover, #next-button:hover {
+#start-button:hover, #next-button:hover, #restart-button:hover {
     background-color: #020024;
     color: whitesmoke;
 }
