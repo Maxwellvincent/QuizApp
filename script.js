@@ -45,25 +45,41 @@ function removeHide(){
 }
 
 // Function is responsible for starting the quiz app. 
-function startQuiz(){
-    // grab the start button, add event listener to it. 
-    startButton.on("click", function(){
-        $(".question-container").show();
-        // take the variable randomquestion, which finds a random question from our list of objects.
-        randomQuestion = questions.sort(() => Math.random() - .5);
-        // allows the quiz to know that this will be the first question of the index.
-        currentQuestionIndex = 0;
-        nextQuestion();
-        // hides the start button
-        startButton.addClass("hide");
-        removeHide();
+// function startQuiz(){
+//     // grab the start button, add event listener to it. 
+//     startButton.on("click", function(){
+//         $(".question-container").show();
+//         // take the variable randomquestion, which finds a random question from our list of objects.
+//         randomQuestion = questions.sort(() => Math.random() - .5);
+//         // allows the quiz to know that this will be the first question of the index.
+//         currentQuestionIndex = 0;
+//         nextQuestion();
+//         // hides the start button
+//         startButton.addClass("hide");
+//         removeHide();
 
-        clearStat();
+//         clearStat();
 
-        updateResults();
-        console.log(score);
-    });
-}
+//         updateResults();
+//         console.log(score);
+//     });
+// }
+
+startButton.on("click", function(){
+    $(".question-container").show();
+    // take the variable randomquestion, which finds a random question from our list of objects.
+    randomQuestion = questions.sort(() => Math.random() - .5);
+    // allows the quiz to know that this will be the first question of the index.
+    currentQuestionIndex = 0;
+    nextQuestion();
+    // hides the start button
+    startButton.addClass("hide");
+    removeHide();
+
+    clearStat();
+
+    updateResults();
+});
 
 // this functions calls the show question function, which outputs the question onto the page.  
 function nextQuestion(){
@@ -149,7 +165,7 @@ nextButton.on("click", (e)=>{
             console.log("restart!!");
             $('.container').empty()
             $('.container').append(`
-            <div class="question-container">
+            <div class="question-container hide">
             <div id="question" class="hide">Question</div><br>
             <form class="answer-form">
                 
@@ -237,7 +253,8 @@ function questionWrong(){
 
 function handleQuiz(){
     $(".question-container").hide();
-    startQuiz();
+    // startQuiz();
 }
 
 handleQuiz();
+
