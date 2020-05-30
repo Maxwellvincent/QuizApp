@@ -112,3 +112,7 @@ body.wrong {
 fieldset.wrong {
     background-color: red;
 }
+
+fieldset.right {
+    background-color: purple;
+}

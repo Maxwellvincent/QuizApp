@@ -72,8 +72,9 @@ function startQuiz(){
 function nextQuestion(){
     // this empties the previous form elements, so that the new elements can be added to DOM.
     $('.answer-form').empty();
-    // $('.input-cnt').append(`<div>Score = ${score}</div>`);
+
     showQuestion(randomQuestion[currentQuestionIndex]);
+
     nextButton.addClass("hide");
 }
 
@@ -92,27 +93,28 @@ function showQuestion(questions){
     });
         // this functions adds a click event to each answer-input
         // may need to add this to each new question, bc it runs once?
-    $('fieldset').on('click', 'input', function(e){
-        nextButton.removeClass("hide");
-        // If the radio button that is clicked is checked(true), then
-        // we want to see if the value (this.value) is equal to the question.answer
-        // If it is then, run this function questionCorrect
-        // also increase score by 1
-        // then show next button, to generate next question
-        console.log(this)
-        if(this.checked === true){
-            answerChoices();
-        }
-        if(this.value == questions.answer){
-            questionCorrect();
-            // need to increase the score and the currentindex
-            score++
-        } else {
-            console.log(score);
-            questionWrong();
-        }
-        console.log(score);
-    });
+        $('fieldset').on('click', 'input', function(e){
+            nextButton.removeClass("hide");
+            // If the radio button that is clicked is checked(true), then
+            // we want to see if the value (this.value) is equal to the question.answer
+            // If it is then, run this function questionCorrect
+            // also increase score by 1
+            // then show next button, to generate next question
+            if(this.checked === true){
+                answerChoices();
+            }
+
+            if(this.value == questions.answer){
+                questionCorrect();
+                // need to increase the score and the currentindex
+                score++
+            } else {
+
+                questionWrong();
+            }
+
+
+        });
 
 }
 
@@ -170,12 +172,16 @@ function clearStat() {
 }
 
 function answerChoices(){
+    
     // grabbed each input, need to remove the checked from the uncheck,
             // may add a class to them to turn red
             // and the checked one to green
             // maybe an If statement.
             let options = $('.answer-form input').toArray();
             options.forEach(function(option){
+            if(randomQuestion[currentQuestionIndex].answer != this.value){
+                option.parentElement.setAttribute("class", "right");
+            }    
             if(option.checked === false){
                 option.parentElement.setAttribute("class", "wrong");
                 option.disabled = true;
@@ -186,7 +192,6 @@ function answerChoices(){
             });
 }
 
-
 function questionCorrect(){
     $('body').addClass("correct");
 }
@@ -194,8 +199,6 @@ function questionCorrect(){
 function questionWrong(){
     $('body').addClass("wrong");
 }
-
-
 
 function handleQuiz(){
     $(".question-container").hide();
