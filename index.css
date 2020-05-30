@@ -114,5 +114,6 @@ fieldset.wrong {
 }
 
 fieldset.right {
-    background-color: purple;
+    background-color: greenyellow;
+    color: black;
 }

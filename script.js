@@ -62,10 +62,8 @@ function startQuiz(){
         clearStat();
 
         updateResults();
-        console.log(score);
     });
 }
-
 
 
 // this functions calls the show question function, which outputs the question onto the page.  
@@ -74,7 +72,6 @@ function nextQuestion(){
     $('.answer-form').empty();
 
     showQuestion(randomQuestion[currentQuestionIndex]);
-
     nextButton.addClass("hide");
 }
 
@@ -82,6 +79,8 @@ function nextQuestion(){
 // Question is passed into this function by nextquestion.
 function showQuestion(questions){
     questionElement.text(questions.question);
+    let correctAnswer = questions.answer;
+
     questions.choices.forEach(function(choice,choiceindex){
         // need to create new dom elements to append questions to. 
         $('.answer-form').append(`
@@ -91,9 +90,13 @@ function showQuestion(questions){
             </fieldset>
         `);
     });
+
+    let answerForm = $('fieldset');
+    let arrayOfAnswers = Array.from(answerForm);
+    console.log(arrayOfAnswers);
         // this functions adds a click event to each answer-input
         // may need to add this to each new question, bc it runs once?
-        $('fieldset').on('click', 'input', function(e){
+        answerForm.on('click', 'input', function(e){
             nextButton.removeClass("hide");
             // If the radio button that is clicked is checked(true), then
             // we want to see if the value (this.value) is equal to the question.answer
@@ -104,12 +107,17 @@ function showQuestion(questions){
                 answerChoices();
             }
 
-            if(this.value == questions.answer){
+            if(this.value == correctAnswer){
                 questionCorrect();
                 // need to increase the score and the currentindex
                 score++
-            } else {
-
+            } else if(this.value != correctAnswer){
+                // find the fieldset with the correct answer
+                arrayOfAnswers.forEach((item) => {
+                    if(item.id == correctAnswer){
+                        console.log(item.setAttribute("class", "right"));
+                    }
+                })
                 questionWrong();
             }
 
@@ -169,6 +177,7 @@ function updateResults(){
 function clearStat() {
     $('body').removeClass("wrong correct");
     $(".input-cnt").empty();
+    $('body h2').remove();
 }
 
 function answerChoices(){
@@ -194,10 +203,12 @@ function answerChoices(){
 
 function questionCorrect(){
     $('body').addClass("correct");
+    $('body').append(`<h2>CORRECT!!!</h2>`);
 }
 
 function questionWrong(){
     $('body').addClass("wrong");
+    $('body').append(`<h2>Wrong!!!</h2>`);
 }
 
 function handleQuiz(){
