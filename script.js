@@ -44,42 +44,29 @@ function removeHide(){
     $(".input-cnt").removeClass("hide");
 }
 
+
 // Function is responsible for starting the quiz app. 
-// function startQuiz(){
-//     // grab the start button, add event listener to it. 
-//     startButton.on("click", function(){
-//         $(".question-container").show();
-//         // take the variable randomquestion, which finds a random question from our list of objects.
-//         randomQuestion = questions.sort(() => Math.random() - .5);
-//         // allows the quiz to know that this will be the first question of the index.
-//         currentQuestionIndex = 0;
-//         nextQuestion();
-//         // hides the start button
-//         startButton.addClass("hide");
-//         removeHide();
+function startQuiz(){
+    // grab the start button, add event listener to it. 
+    startButton.on("click", function(){
+        $(".question-container").show();
+        // take the variable randomquestion, which finds a random question from our list of objects.
+        randomQuestion = questions.sort(() => Math.random() - .5);
+        // allows the quiz to know that this will be the first question of the index.
+        currentQuestionIndex = 0;
+        nextQuestion();
+        // hides the start button
+        startButton.addClass("hide");
+        removeHide();
 
-//         clearStat();
+        clearStat();
 
-//         updateResults();
-//         console.log(score);
-//     });
-// }
+        updateResults();
+        console.log(score);
+    });
+}
 
-startButton.on("click", function(){
-    $(".question-container").show();
-    // take the variable randomquestion, which finds a random question from our list of objects.
-    randomQuestion = questions.sort(() => Math.random() - .5);
-    // allows the quiz to know that this will be the first question of the index.
-    currentQuestionIndex = 0;
-    nextQuestion();
-    // hides the start button
-    startButton.addClass("hide");
-    removeHide();
 
-    clearStat();
-
-    updateResults();
-});
 
 // this functions calls the show question function, which outputs the question onto the page.  
 function nextQuestion(){
@@ -153,60 +140,19 @@ nextButton.on("click", (e)=>{
         console.log(score);
         console.log("game is done.");
         // NEED TO IMPLEMENT FUNCTIONALITY HERE, TO PRESENT LAST SCREEN / OR DYNAMICALLY UPDATE PAGE
-        $('.container').empty()
+        $('.container').empty();
         $('.container').append(`
             <h1 id="results">You scored ${score}/${randomQuestion.length}</h1>
             <h2>${(score/randomQuestion.length) * 100} %</h2>
             <div class="controls">
                 <button id="restart-button">Restart Quiz</button>
             </div>
-        `)
+        `);
         $('#restart-button').on('click', function(){
-            console.log("restart!!");
-            $('.container').empty()
-            $('.container').append(`
-            <div class="question-container hide">
-            <div id="question" class="hide">Question</div><br>
-            <form class="answer-form">
-                
-                <!-- <fieldset id="" class="hide">
-                    <input type="radio" id="a" name="answer" value="a">
-                    <label for="a">Answer A</label>
-                </fieldset>
-                
-                <fieldset id="" class="hide">
-                    <input type="radio" id="b" name="answer" value="b">
-                    <label for="b">Answer B</label>
-                </fieldset>
-                
-                <fieldset id="" class="hide">
-                    <input type="radio" id="c" name="answer" value="c">
-                    <label for="c">Answer C</label>
-                </fieldset>
-                
-                <fieldset id="" class="hide">
-                    <input type="radio" id="d" name="answer" value="d">
-                    <label for="d">Answer D</label>
-                </fieldset> -->
-                
-            </form>
-            </div>
-            <div class="controls">
-                <button id="start-button">Start Quiz</button>
-                <button id="next-button" class="hide">Next</button>
-            </div>
-            `);
-
-            // clear out this page
-            // set everything to zero
-            score = 0;
-            currentQuestionIndex = 0;
-            // start at the first question again. 
+            console.log(score);
+            window.location.reload();
+            console.log("restart!!"); 
         })
-        // CLEAR THE SCREEN, 
-        //  SHOW THE FINAL SCORE AS A PERCENT
-        // HAVE A RESTART BUTTON
-        //  ALL OF THIS SHOULD BE A FUNCTION CALLED RESTARTQUIZ
     }
 
         
@@ -253,7 +199,7 @@ function questionWrong(){
 
 function handleQuiz(){
     $(".question-container").hide();
-    // startQuiz();
+    startQuiz();
 }
 
 handleQuiz();
