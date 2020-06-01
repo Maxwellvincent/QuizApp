@@ -84,7 +84,7 @@ function showQuestion(questions){
     questions.choices.forEach(function(choice,choiceindex){
         // need to create new dom elements to append questions to. 
         $('.answer-form').append(`
-            <input type="buttton" class="answers" id="${choiceindex}" value="${choice}">
+            <buttton class="answers" tabIndex="0" id="${choiceindex}">${choice}</button>
         `);
     });
 
