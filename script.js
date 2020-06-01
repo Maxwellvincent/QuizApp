@@ -84,19 +84,16 @@ function showQuestion(questions){
     questions.choices.forEach(function(choice,choiceindex){
         // need to create new dom elements to append questions to. 
         $('.answer-form').append(`
-            <fieldset id="${choiceindex}">
-            <input type="radio" name="answer" value="${choiceindex}">
-            <label for="${choiceindex}">${choice}</label>
-            </fieldset>
+            <input type="buttton" class="answers" id="${choiceindex}" value="${choice}">
         `);
     });
 
-    let answerForm = $('fieldset');
-    let arrayOfAnswers = Array.from(answerForm);
+    let answerButtons = $('.answers');
+    let arrayOfAnswers = Array.from(answerButtons);
     console.log(arrayOfAnswers);
         // this functions adds a click event to each answer-input
         // may need to add this to each new question, bc it runs once?
-        answerForm.on('click', 'input', function(e){
+        answerButtons.on('click', 'input', function(e){
             nextButton.removeClass("hide");
             // If the radio button that is clicked is checked(true), then
             // we want to see if the value (this.value) is equal to the question.answer
@@ -169,7 +166,7 @@ nextButton.on("click", (e)=>{
 })
 
 function updateResults(){
-    $(".input-cnt").append(`<input type="text" id="counter" value="Current question: ${currentQuestionIndex}/${randomQuestion.length}"></input>`);
+    $(".input-cnt").append(`<input type="text" id="counter" value="Current question: ${currentQuestionIndex + 1}/${randomQuestion.length}"></input>`);
 
     $(".input-cnt").append(`<input type="text" id="score" value="Score: ${score}"</input>`);
 }
