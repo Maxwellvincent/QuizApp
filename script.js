@@ -94,7 +94,6 @@ function showQuestion(questions){
         // may need to add this to each new question, bc it runs once?
         answerButtons.on('click', function(e){
             nextButton.removeClass("hide");
-            // If the radio button that is clicked is checked(true), then
             console.log(e.target);
             // we want to see if the value (this.value) is equal to the question.answer
             // If it is then, run this function questionCorrect
