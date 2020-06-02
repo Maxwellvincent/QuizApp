@@ -152,11 +152,11 @@ body.wrong {
     background-color: red;
 }
 
-fieldset.wrong {
+.wrong {
     background-color: red;
 }
 
-fieldset.right {
+.right {
     background-color: greenyellow;
     color: black;
 }

@@ -90,36 +90,42 @@ function showQuestion(questions){
 
     let answerButtons = $('.answers');
     let arrayOfAnswers = Array.from(answerButtons);
-    console.log(arrayOfAnswers);
         // this functions adds a click event to each answer-input
         // may need to add this to each new question, bc it runs once?
-        answerButtons.on('click', 'input', function(e){
+        answerButtons.on('click', function(e){
             nextButton.removeClass("hide");
             // If the radio button that is clicked is checked(true), then
+            console.log(e.target);
             // we want to see if the value (this.value) is equal to the question.answer
             // If it is then, run this function questionCorrect
             // also increase score by 1
             // then show next button, to generate next question
-            if(this.checked === true){
-                answerChoices();
-            }
+            // if(this.checked === true){
+            //     answerChoices();
+            // }
 
-            if(this.value == correctAnswer){
+            if(this.id == correctAnswer){
                 questionCorrect();
+
                 // need to increase the score and the currentindex
                 score++
-            } else if(this.value != correctAnswer){
-                // find the fieldset with the correct answer
-                arrayOfAnswers.forEach((item) => {
-                    if(item.id == correctAnswer){
-                        console.log(item.setAttribute("class", "right"));
+
+            } else if(this.id != correctAnswer){
+                console.log(arrayOfAnswers);
+
+                // find the button with the correct answer
+                arrayOfAnswers.forEach((button) => {
+                    if(button.id == correctAnswer){
+                        button.classList.add("right");
                     }
-                })
+                });
+
                 questionWrong();
             }
 
 
         });
+
 
 }
 
@@ -177,26 +183,26 @@ function clearStat() {
     $('body h2').remove();
 }
 
-function answerChoices(){
+// function answerChoices(){
     
-    // grabbed each input, need to remove the checked from the uncheck,
-            // may add a class to them to turn red
-            // and the checked one to green
-            // maybe an If statement.
-            let options = $('.answer-form input').toArray();
-            options.forEach(function(option){
-            if(randomQuestion[currentQuestionIndex].answer != this.value){
-                option.parentElement.setAttribute("class", "right");
-            }    
-            if(option.checked === false){
-                option.parentElement.setAttribute("class", "wrong");
-                option.disabled = true;
-            }
-            if(option.checked === true){
-                option.parentElement.setAttribute("class", "correct");
-            }
-            });
-}
+//     // grabbed each input, need to remove the checked from the uncheck,
+//             // may add a class to them to turn red
+//             // and the checked one to green
+//             // maybe an If statement.
+//             let options = $('.answer-form input').toArray();
+//             options.forEach(function(option){
+//             if(randomQuestion[currentQuestionIndex].answer != this.value){
+//                 option.parentElement.setAttribute("class", "right");
+//             }    
+//             if(option.checked === false){
+//                 option.parentElement.setAttribute("class", "wrong");
+//                 option.disabled = true;
+//             }
+//             if(option.checked === true){
+//                 option.parentElement.setAttribute("class", "correct");
+//             }
+//             });
+// }
 
 function questionCorrect(){
     $('body').addClass("correct");
