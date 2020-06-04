@@ -89,7 +89,7 @@ function showQuestion(questions){
         // need to create new dom elements to append questions to. 
         $('.answer-form').append(`
             <fieldset id="${choiceindex}">
-            <input type="radio" name="answer" value="${choiceindex}">
+            <input type="radio" class="radio" name="answer" value="${choiceindex}">
             <label for="${choiceindex}">${choice}</label>
             </fieldset>
         `);
@@ -115,14 +115,27 @@ function showQuestion(questions){
             });
             
             if(chosenAnswer == correctAnswer){
+                radioBtn.forEach((button) => {button.disabled = true});
                 questionCorrect();
                 // need to increase the score and the currentindex
                 score++
                 submitButton.addClass("hide");
                 nextButton.removeClass("hide");
             } else {
+                radioBtn.forEach((button) => {button.disabled = true});
                 // Need to implement code for wrong answers, also need to add classes
                 // when finish style the App larger text!!
+                // find button that is correct
+                radioBtn.filter(function(button){
+                    if(button.value == correctAnswer){
+                        // change the fieldset to green
+                        console.log(button.parentElement.classList.add("right"));
+                    }
+                })
+                submitButton.addClass("hide");
+                nextButton.removeClass("hide");
+                
+                // change other's to red
                 
             }
 

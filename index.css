@@ -106,6 +106,13 @@ fieldset:hover {
     background-color: #020024;
 }
 
+input[type="radio"] {
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+    transform: scale(1.5);
+    
+}
+
 .question-container {
     margin-bottom: 20px;
 }
@@ -120,13 +127,13 @@ fieldset:hover {
     display: none;
 }
 
-#start-button, #next-button, #restart-button {
+#start-button, #next-button, #restart-button, #submit-button {
     font-size: 1.5rem;
     font-weight: bold;
     padding: 10px 20px;
 }
 
-#start-button:hover, #next-button:hover, #restart-button:hover {
+#start-button:hover, #next-button:hover, #restart-button:hover, .radio:hover {
     background-color: #020024;
     color: whitesmoke;
 }
