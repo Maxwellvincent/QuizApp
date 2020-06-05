@@ -88,6 +88,7 @@ function showQuestion(questions){
     questions.choices.forEach(function(choice,choiceindex){
         // need to create new dom elements to append questions to. 
         $('.answer-form').append(`
+
             <fieldset id="${choiceindex}">
             <input type="radio" class="radio" name="answer" value="${choiceindex}">
             <label for="${choiceindex}">${choice}</label>
@@ -117,8 +118,10 @@ function showQuestion(questions){
             if(chosenAnswer == correctAnswer){
                 radioBtn.forEach((button) => {button.disabled = true});
                 questionCorrect();
+
                 // need to increase the score and the currentindex
                 score++
+
                 submitButton.addClass("hide");
                 nextButton.removeClass("hide");
             } else {
@@ -136,7 +139,6 @@ function showQuestion(questions){
                 nextButton.removeClass("hide");
                 
                 // change other's to red
-                
             }
 
             //  else {
@@ -177,6 +179,7 @@ function showQuestion(questions){
 
 
         // });
+
 
 }
 
@@ -238,7 +241,7 @@ nextButton.on("click", (e)=>{
 })
 
 function updateResults(){
-    $(".input-cnt").append(`<input type="text" id="counter" value="Current question: ${currentQuestionIndex}/${randomQuestion.length}"></input>`);
+    $(".input-cnt").append(`<input type="text" id="counter" value="Current question: ${currentQuestionIndex + 1}/${randomQuestion.length}"></input>`);
 
     $(".input-cnt").append(`<input type="text" id="score" value="Score: ${score}"</input>`);
 }
@@ -249,26 +252,26 @@ function clearStat() {
     $('body h2').remove();
 }
 
-function answerChoices(){
+// function answerChoices(){
     
-    // grabbed each input, need to remove the checked from the uncheck,
-            // may add a class to them to turn red
-            // and the checked one to green
-            // maybe an If statement.
-            let options = $('.answer-form input').toArray();
-            options.forEach(function(option){
-            if(randomQuestion[currentQuestionIndex].answer != this.value){
-                option.parentElement.setAttribute("class", "right");
-            }    
-            if(option.checked === false){
-                option.parentElement.setAttribute("class", "wrong");
-                option.disabled = true;
-            }
-            if(option.checked === true){
-                option.parentElement.setAttribute("class", "correct");
-            }
-            });
-}
+//     // grabbed each input, need to remove the checked from the uncheck,
+//             // may add a class to them to turn red
+//             // and the checked one to green
+//             // maybe an If statement.
+//             let options = $('.answer-form input').toArray();
+//             options.forEach(function(option){
+//             if(randomQuestion[currentQuestionIndex].answer != this.value){
+//                 option.parentElement.setAttribute("class", "right");
+//             }    
+//             if(option.checked === false){
+//                 option.parentElement.setAttribute("class", "wrong");
+//                 option.disabled = true;
+//             }
+//             if(option.checked === true){
+//                 option.parentElement.setAttribute("class", "correct");
+//             }
+//             });
+// }
 
 function questionCorrect(){
     $('body').addClass("correct");
