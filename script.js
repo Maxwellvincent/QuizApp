@@ -90,30 +90,29 @@ function showQuestion(questions){
         $('.answer-form').append(`
 
             <fieldset id="${choiceindex}">
-            <input type="radio" class="radio" name="answer" value="${choiceindex}">
-            <label for="${choiceindex}">${choice}</label>
+            <label for="${choiceindex}"><input type="radio" class="radio" name="answer" value="${choiceindex}">
+            ${choice}</label>
             </fieldset>
         `);
     });
     let radioBtn = $(":radio").toArray();
     let answerForm = $('fieldset');
     let arrayOfAnswers = Array.from(answerForm);
-    console.log(arrayOfAnswers);
         // this functions adds a click event to each answer-input
         // may need to add this to each new question, bc it runs once?
         submitButton.on("click", () => {
-
-            if(checkButton() == false){
-                alert("please select button!");
-            }
-            
+            console.log(score);
             let chosenAnswer; 
             radioBtn.filter(function(button) {
                 if(button.checked == true) {
-                    console.log(button.value);
                     chosenAnswer = button.value;
                 }
             });
+
+
+            if(checkButton() == false){
+                alert("please select button!");
+            } else {
             
             if(chosenAnswer == correctAnswer){
                 radioBtn.forEach((button) => {button.disabled = true});
@@ -124,63 +123,32 @@ function showQuestion(questions){
 
                 submitButton.addClass("hide");
                 nextButton.removeClass("hide");
-            } else {
-                radioBtn.forEach((button) => {button.disabled = true});
-                // Need to implement code for wrong answers, also need to add classes
-                // when finish style the App larger text!!
-                // find button that is correct
-                radioBtn.filter(function(button){
-                    if(button.value == correctAnswer){
-                        // change the fieldset to green
-                        console.log(button.parentElement.classList.add("right"));
-                    }
-                })
-                submitButton.addClass("hide");
-                nextButton.removeClass("hide");
-                
-                // change other's to red
-            }
+                } else {
+                    radioBtn.forEach((button) => {button.disabled = true});
+                    // Need to implement code for wrong answers, also need to add classes
+                    // when finish style the App larger text!!
+                    // find button that is correct
+                    radioBtn.filter(function(button){
+                        if(button.value == correctAnswer){
+                            // change the fieldset to green
+                            console.log(button.parentElement.classList.add("right"));
+                        }
+                    })
 
-            //  else {
-            //     radioBtn.forEach((button) => {
-            //         if(button.checked != true){
-            //             button.disabled = true;
-            //         }
-            //     });
-            //     console.log("THIS CLICKED");
-            // }
- 
+                    questionWrong();
+                    submitButton.addClass("hide");
+                    nextButton.removeClass("hide");
+                
+                }
+
+            }
+            
+                console.log(score);
         
         });
-        // answerForm.on('click', 'input', function(e){
-        //     nextButton.removeClass("hide");
-        //     // If the radio button that is clicked is checked(true), then
-        //     // we want to see if the value (this.value) is equal to the question.answer
-        //     // If it is then, run this function questionCorrect
-        //     // also increase score by 1
-        //     // then show next button, to generate next question
-        //     if(this.checked === true){
-        //         answerChoices();
-        //     }
+ 
 
-        //     if(this.value == correctAnswer){
-        //         questionCorrect();
-        //         // need to increase the score and the currentindex
-        //         score++
-        //     } else if(this.value != correctAnswer){
-        //         // find the fieldset with the correct answer
-        //         arrayOfAnswers.forEach((item) => {
-        //             if(item.id == correctAnswer){
-        //                 console.log(item.setAttribute("class", "right"));
-        //             }
-        //         })
-        //         questionWrong();
-        //     }
-
-
-        // });
-
-
+        console.log(score);
 }
 
 // makes sure a button is clicked
@@ -202,9 +170,6 @@ function checkButton(){
 // Next grab the next button add a click event
 nextButton.on("click", (e)=>{
     currentQuestionIndex++;
-
-    // need to check if the answer was correct, and then add to score. 
-
 
     // need to clear, and reset the background color
     clearStat();
@@ -252,35 +217,15 @@ function clearStat() {
     $('body h2').remove();
 }
 
-// function answerChoices(){
-    
-//     // grabbed each input, need to remove the checked from the uncheck,
-//             // may add a class to them to turn red
-//             // and the checked one to green
-//             // maybe an If statement.
-//             let options = $('.answer-form input').toArray();
-//             options.forEach(function(option){
-//             if(randomQuestion[currentQuestionIndex].answer != this.value){
-//                 option.parentElement.setAttribute("class", "right");
-//             }    
-//             if(option.checked === false){
-//                 option.parentElement.setAttribute("class", "wrong");
-//                 option.disabled = true;
-//             }
-//             if(option.checked === true){
-//                 option.parentElement.setAttribute("class", "correct");
-//             }
-//             });
-// }
 
 function questionCorrect(){
     $('body').addClass("correct");
-    $('body').append(`<h2>CORRECT!!!</h2>`);
+    
 }
 
 function questionWrong(){
     $('body').addClass("wrong");
-    $('body').append(`<h2>Wrong!!!</h2>`);
+    
 }
 
 function handleQuiz(){

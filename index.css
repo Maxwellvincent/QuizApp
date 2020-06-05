@@ -92,19 +92,18 @@ html,body {
 .container {
     width: 800px;
     max-width: 80%;
+    padding-top: 10px;
+    padding-bottom: 10px;
     background-color: whitesmoke;
     border-radius: 5px;
-    padding: 10px;
+    /* padding: 10px; */
     text-align: center;
     box-shadow: 5px 5px 8px #000000;
 }
 
 form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 2fr 2fr;
-    gap: 10px;
-    width: 100%;
+    text-align: start;
+
 }
 
 .answers {
@@ -130,6 +129,12 @@ input[type="radio"] {
     
 }
 
+fieldset {
+    padding: 0;
+    border: 0;
+    
+}
+
 .question-container {
     margin-bottom: 20px;
 }
@@ -148,6 +153,8 @@ input[type="radio"] {
     font-size: 1.5rem;
     font-weight: bold;
     padding: 10px 20px;
+    width: 90%;
+    border-radius: 5px;
 }
 
 #start-button:hover, #next-button:hover, #restart-button:hover, .radio:hover {
