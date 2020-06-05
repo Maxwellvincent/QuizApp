@@ -1,5 +1,7 @@
 *, *::before, *::after{
     box-sizing: border-box;
+    font-size: large;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 @media (max-width: 480px) {
@@ -49,6 +51,14 @@ html,body {
     justify-content: center;
 }
 
+.heading {
+    background-color: whitesmoke;
+    width: 100%;
+    text-align: center;
+    border: 5px solid black;
+    border-radius: 10px;
+    
+}
 .input-cnt {
     /* margin-bottom: 1.5rem; */
     display: flex;
