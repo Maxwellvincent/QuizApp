@@ -1,5 +1,6 @@
 const startButton = $("#start-button");
 const nextButton = $("#next-button");
+const submitButton = $("#submit-button");
 const questionElement = $("#question");
 let score = 0;
 // undeclared variable random question
@@ -39,6 +40,7 @@ const questions = [
 // this function removes the hide class from all the elements. 
 function removeHide(){
     $(".question-container").removeClass("hide");
+    submitButton.removeClass("hide");
     $("#question").removeClass("hide");
     $("fieldset").removeClass("hide");
     $(".input-cnt").removeClass("hide");
@@ -63,6 +65,7 @@ function startQuiz(){
 
         updateResults();
     });
+
 }
 
 
@@ -73,6 +76,7 @@ function nextQuestion(){
 
     showQuestion(randomQuestion[currentQuestionIndex]);
     nextButton.addClass("hide");
+    submitButton.removeClass("hide");
 }
 
 
@@ -84,52 +88,118 @@ function showQuestion(questions){
     questions.choices.forEach(function(choice,choiceindex){
         // need to create new dom elements to append questions to. 
         $('.answer-form').append(`
-            <buttton class="answers" tabIndex="0" id="${choiceindex}">${choice}</button>
+
+            <fieldset id="${choiceindex}">
+            <input type="radio" class="radio" name="answer" value="${choiceindex}">
+            <label for="${choiceindex}">${choice}</label>
+            </fieldset>
         `);
     });
-
-    let answerButtons = $('.answers');
-    let arrayOfAnswers = Array.from(answerButtons);
+    let radioBtn = $(":radio").toArray();
+    let answerForm = $('fieldset');
+    let arrayOfAnswers = Array.from(answerForm);
+    console.log(arrayOfAnswers);
         // this functions adds a click event to each answer-input
         // may need to add this to each new question, bc it runs once?
-        answerButtons.on('click', function(e){
-            nextButton.removeClass("hide");
-            console.log(e.target);
-            // we want to see if the value (this.value) is equal to the question.answer
-            // If it is then, run this function questionCorrect
-            // also increase score by 1
-            // then show next button, to generate next question
-            // if(this.checked === true){
-            //     answerChoices();
-            // }
+        submitButton.on("click", () => {
 
-            if(this.id == correctAnswer){
+            if(checkButton() == false){
+                alert("please select button!");
+            }
+            
+            let chosenAnswer; 
+            radioBtn.filter(function(button) {
+                if(button.checked == true) {
+                    console.log(button.value);
+                    chosenAnswer = button.value;
+                }
+            });
+            
+            if(chosenAnswer == correctAnswer){
+                radioBtn.forEach((button) => {button.disabled = true});
                 questionCorrect();
 
                 // need to increase the score and the currentindex
                 score++
 
-            } else if(this.id != correctAnswer){
-                console.log(arrayOfAnswers);
-
-                // find the button with the correct answer
-                arrayOfAnswers.forEach((button) => {
-                    if(button.id == correctAnswer){
-                        button.classList.add("right");
+                submitButton.addClass("hide");
+                nextButton.removeClass("hide");
+            } else {
+                radioBtn.forEach((button) => {button.disabled = true});
+                // Need to implement code for wrong answers, also need to add classes
+                // when finish style the App larger text!!
+                // find button that is correct
+                radioBtn.filter(function(button){
+                    if(button.value == correctAnswer){
+                        // change the fieldset to green
+                        console.log(button.parentElement.classList.add("right"));
                     }
-                });
-
-                questionWrong();
+                })
+                submitButton.addClass("hide");
+                nextButton.removeClass("hide");
+                
+                // change other's to red
             }
 
-
+            //  else {
+            //     radioBtn.forEach((button) => {
+            //         if(button.checked != true){
+            //             button.disabled = true;
+            //         }
+            //     });
+            //     console.log("THIS CLICKED");
+            // }
+ 
+        
         });
+        // answerForm.on('click', 'input', function(e){
+        //     nextButton.removeClass("hide");
+        //     // If the radio button that is clicked is checked(true), then
+        //     // we want to see if the value (this.value) is equal to the question.answer
+        //     // If it is then, run this function questionCorrect
+        //     // also increase score by 1
+        //     // then show next button, to generate next question
+        //     if(this.checked === true){
+        //         answerChoices();
+        //     }
+
+        //     if(this.value == correctAnswer){
+        //         questionCorrect();
+        //         // need to increase the score and the currentindex
+        //         score++
+        //     } else if(this.value != correctAnswer){
+        //         // find the fieldset with the correct answer
+        //         arrayOfAnswers.forEach((item) => {
+        //             if(item.id == correctAnswer){
+        //                 console.log(item.setAttribute("class", "right"));
+        //             }
+        //         })
+        //         questionWrong();
+        //     }
+
+
+        // });
 
 
 }
 
-// Next grab the next button add a click event
+// makes sure a button is clicked
+function checkButton(){
+    let radioBtn = $(":radio").toArray();
+    let sum = 0;
+    radioBtn.forEach((button) => {
+        if(button.checked === false){
+            sum++;
+        }
+    });
+    if(sum < 4){
+        return true;
+    } else {
+        return false;
+    }
+}
 
+// Next grab the next button add a click event
 nextButton.on("click", (e)=>{
     currentQuestionIndex++;
 
