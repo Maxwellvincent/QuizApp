@@ -2,6 +2,7 @@ const startButton = $("#start-button");
 const nextButton = $("#next-button");
 const submitButton = $("#submit-button");
 const questionElement = $("#question");
+let correctChoice;
 let score = 0;
 // undeclared variable random question
 let randomQuestion;
@@ -101,7 +102,7 @@ function showQuestion(questions){
         // this functions adds a click event to each answer-input
         // may need to add this to each new question, bc it runs once?
         submitButton.on("click", () => {
-            console.log(score);
+
             let chosenAnswer; 
             radioBtn.filter(function(button) {
                 if(button.checked == true) {
@@ -119,7 +120,7 @@ function showQuestion(questions){
                 questionCorrect();
 
                 // need to increase the score and the currentindex
-                score++
+                // score++
 
                 submitButton.addClass("hide");
                 nextButton.removeClass("hide");
@@ -133,7 +134,7 @@ function showQuestion(questions){
                             // change the fieldset to green
                             console.log(button.parentElement.classList.add("right"));
                         }
-                    })
+                    });
 
                     questionWrong();
                     submitButton.addClass("hide");
@@ -142,13 +143,9 @@ function showQuestion(questions){
                 }
 
             }
-            
-                console.log(score);
-        
+
         });
  
-
-        console.log(score);
 }
 
 // makes sure a button is clicked
@@ -170,12 +167,14 @@ function checkButton(){
 // Next grab the next button add a click event
 nextButton.on("click", (e)=>{
     currentQuestionIndex++;
-
+    if(correctChoice) {
+        score++;
+    }
     // need to clear, and reset the background color
     clearStat();
     // Need to check if all questions are done, and if so send to end page.
     if(currentQuestionIndex < randomQuestion.length){
-        console.log(score);
+
         // need to generate the next question
         nextQuestion();
 
@@ -184,7 +183,6 @@ nextButton.on("click", (e)=>{
 
 
     } else {
-        console.log(score);
         console.log("game is done.");
         // NEED TO IMPLEMENT FUNCTIONALITY HERE, TO PRESENT LAST SCREEN / OR DYNAMICALLY UPDATE PAGE
         $('.container').empty();
@@ -196,7 +194,6 @@ nextButton.on("click", (e)=>{
             </div>
         `);
         $('#restart-button').on('click', function(){
-            console.log(score);
             window.location.reload();
             console.log("restart!!"); 
         })
@@ -220,7 +217,7 @@ function clearStat() {
 
 function questionCorrect(){
     $('body').addClass("correct");
-    
+    correctChoice = true;
 }
 
 function questionWrong(){

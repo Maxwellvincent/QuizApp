@@ -52,13 +52,21 @@ html,body {
 }
 
 .heading {
-    background-color: whitesmoke;
+    height: 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color:#020024;
     width: 100%;
     text-align: center;
-    border: 5px solid black;
+    border: 5px solid #3d6cb9;
     border-radius: 10px;
-    
+    color: whitesmoke;
+    justify-content: center;
+    padding: 10px;
 }
+
+
 .input-cnt {
     /* margin-bottom: 1.5rem; */
     display: flex;
@@ -91,7 +99,7 @@ html,body {
 
 .container {
     width: 800px;
-    max-width: 80%;
+    max-width: 85%;
     padding-top: 10px;
     padding-bottom: 10px;
     background-color: whitesmoke;
