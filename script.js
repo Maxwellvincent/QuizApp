@@ -2,6 +2,7 @@ const startButton = $("#start-button");
 const nextButton = $("#next-button");
 const submitButton = $("#submit-button");
 const questionElement = $("#question");
+const bodyColor = $("body");
 let correctChoice;
 let score = 0;
 // undeclared variable random question
@@ -96,54 +97,56 @@ function showQuestion(questions){
             </fieldset>
         `);
     });
+
     let radioBtn = $(":radio").toArray();
     let answerForm = $('fieldset');
-    let arrayOfAnswers = Array.from(answerForm);
+    // let arrayOfAnswers = Array.from(answerForm);
         // this functions adds a click event to each answer-input
         // may need to add this to each new question, bc it runs once?
-        submitButton.on("click", () => {
-
+        submitButton.on("click", (e) => {
+            if(checkButton() == false){
+                alert("Please select answer");
+                
+            }
+            // empty variable for answer selected
             let chosenAnswer; 
+
+            // selects the button that was clicked, and assigns it as the chosen answer
             radioBtn.filter(function(button) {
                 if(button.checked == true) {
-                    chosenAnswer = button.value;
+                    chosenAnswer = parseInt(button.value,10);
                 }
             });
 
 
-            if(checkButton() == false){
-                alert("please select button!");
-            } else {
-            
+            console.log(typeof chosenAnswer);
+            console.log(typeof correctAnswer);
+
+            // Problem everything is still firing? condition is not being met 
             if(chosenAnswer == correctAnswer){
+                console.log("Correct is firing");
                 radioBtn.forEach((button) => {button.disabled = true});
                 questionCorrect();
 
-                // need to increase the score and the currentindex
-                // score++
-
                 submitButton.addClass("hide");
                 nextButton.removeClass("hide");
-                } else {
-                    radioBtn.forEach((button) => {button.disabled = true});
+            } else {
+                questionWrong();
+                console.log("Wrong is firing");
+                radioBtn.forEach((button) => {button.disabled = true});
                     // Need to implement code for wrong answers, also need to add classes
-                    // when finish style the App larger text!!
                     // find button that is correct
                     radioBtn.filter(function(button){
                         if(button.value == correctAnswer){
                             // change the fieldset to green
-                            console.log(button.parentElement.classList.add("right"));
+                            button.parentElement.classList.add("right");
                         }
                     });
 
-                    questionWrong();
                     submitButton.addClass("hide");
                     nextButton.removeClass("hide");
-                
-                }
-
-            }
-
+            } 
+            
         });
  
 }
@@ -209,15 +212,15 @@ function updateResults(){
 }
 
 function clearStat() {
-    $('body').removeClass("wrong correct");
+    bodyColor.removeClass("wrong");
+    bodyColor.removeClass("correct");
     $(".input-cnt").empty();
-    $('body h2').remove();
 }
 
 
 function questionCorrect(){
     $('body').addClass("correct");
-    correctChoice = true;
+    // correctChoice = true;
 }
 
 function questionWrong(){
