@@ -2,7 +2,10 @@ const startButton = $("#start-button");
 const nextButton = $("#next-button");
 const submitButton = $("#submit-button");
 const questionElement = $("#question");
+let radioBtn = $(":radio").toArray();
 const bodyColor = $("body");
+let correctAnswer;
+let chosenAnswer;
 let correctChoice;
 let score = 0;
 // undeclared variable random question
@@ -79,77 +82,77 @@ function nextQuestion(){
     showQuestion(randomQuestion[currentQuestionIndex]);
     nextButton.addClass("hide");
     submitButton.removeClass("hide");
+    bodyColor.removeClass('wrong correct');
 }
 
 
 // Question is passed into this function by nextquestion.
 function showQuestion(questions){
     questionElement.text(questions.question);
-    let correctAnswer = questions.answer;
+    correctAnswer = questions.answer;
 
     questions.choices.forEach(function(choice,choiceindex){
         // need to create new dom elements to append questions to. 
         $('.answer-form').append(`
-
             <fieldset id="${choiceindex}">
             <label for="${choiceindex}"><input type="radio" class="radio" name="answer" value="${choiceindex}">
             ${choice}</label>
             </fieldset>
         `);
     });
+        
+ 
+}
 
-    let radioBtn = $(":radio").toArray();
-    let answerForm = $('fieldset');
-    // let arrayOfAnswers = Array.from(answerForm);
-        // this functions adds a click event to each answer-input
-        // may need to add this to each new question, bc it runs once?
-        submitButton.on("click", (e) => {
-            if(checkButton() == false){
-                alert("Please select answer");
-                
-            }
-            // empty variable for answer selected
-            let chosenAnswer; 
+submitButton.on("click", (e) => {
+    if(checkButton() == false){
+        alert("Please select answer");
+        return;
+    }
+     
+    // selects the button that was clicked, and assigns it as the chosen answer
+    // $(":radio").filter(function(button) {
+    //     if(button.checked == true) {
+    //         console.log(button);
+    //         chosenAnswer = button.value;
+    //     }
+    // });
+    let buttons = $('.radio').toArray();
+    buttons.forEach(function(button){
+        if(button.checked == true) {
+            console.log(button);
+            chosenAnswer = button.value;
+        }
+    })
+    console.log(chosenAnswer);
+    console.log(correctAnswer);
+    // Problem everything is still firing? condition is not being met 
+    if(chosenAnswer == correctAnswer){
+        console.log("Correct is firing");
+        radioBtn.forEach((button) => {button.disabled = true});
+        questionCorrect();
 
-            // selects the button that was clicked, and assigns it as the chosen answer
-            radioBtn.filter(function(button) {
-                if(button.checked == true) {
-                    chosenAnswer = parseInt(button.value,10);
+        submitButton.addClass("hide");
+        nextButton.removeClass("hide");
+    } 
+    else {
+        questionWrong();
+        console.log("Wrong is firing");
+        radioBtn.forEach((button) => {button.disabled = true});
+            // Need to implement code for wrong answers, also need to add classes
+            // find button that is correct
+            radioBtn.filter(function(button){
+                if(button.value == correctAnswer){
+                    // change the fieldset to green
+                    button.parentElement.classList.add("right");
                 }
             });
 
-
-            console.log(typeof chosenAnswer);
-            console.log(typeof correctAnswer);
-
-            // Problem everything is still firing? condition is not being met 
-            if(chosenAnswer == correctAnswer){
-                console.log("Correct is firing");
-                radioBtn.forEach((button) => {button.disabled = true});
-                questionCorrect();
-
-                submitButton.addClass("hide");
-                nextButton.removeClass("hide");
-            } else {
-                questionWrong();
-                console.log("Wrong is firing");
-                radioBtn.forEach((button) => {button.disabled = true});
-                    // Need to implement code for wrong answers, also need to add classes
-                    // find button that is correct
-                    radioBtn.filter(function(button){
-                        if(button.value == correctAnswer){
-                            // change the fieldset to green
-                            button.parentElement.classList.add("right");
-                        }
-                    });
-
-                    submitButton.addClass("hide");
-                    nextButton.removeClass("hide");
-            } 
-            
-        });
- 
-}
+            submitButton.addClass("hide");
+            nextButton.removeClass("hide");
+    } 
+    
+});
 
 // makes sure a button is clicked
 function checkButton(){
@@ -220,7 +223,7 @@ function clearStat() {
 
 function questionCorrect(){
     $('body').addClass("correct");
-    // correctChoice = true;
+    correctChoice = true;
 }
 
 function questionWrong(){
