@@ -173,9 +173,10 @@ function checkButton(){
 // Next grab the next button add a click event
 nextButton.on("click", (e)=>{
     currentQuestionIndex++;
-    if(correctChoice) {
-        score++;
-    }
+    // console.log(correctChoice);
+    // if(correctChoice) {
+    //     score++;
+    // }
     // need to clear, and reset the background color
     clearStat();
     // Need to check if all questions are done, and if so send to end page.
@@ -223,7 +224,8 @@ function clearStat() {
 
 function questionCorrect(){
     $('body').addClass("correct");
-    correctChoice = true;
+    // correctChoice = true;
+    score++
 }
 
 function questionWrong(){
